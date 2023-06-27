@@ -9,7 +9,7 @@ const UsersFlatList = () => {
       <FlatList
         data={users}
         renderItem={(user) => <UserCard user={user.item} />}
-        keyExtractor={(user) => user.login.uuid}
+        keyExtractor={(user) => user.id}
       />
     </View>
   );

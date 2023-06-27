@@ -29,15 +29,15 @@ const UserModal = ({ user, setShowModal ,previusScreen}) => {
     { label: "Ms", value: "Ms" },
   ];
   const dispatch = useDispatch();
-  const [name, setName] = useState(user ? user.name.first : "");
-  const [lastName, setLastName] = useState(user ? user.name.last : "");
+  const [name, setName] = useState(user ? user.firstName : "");
+  const [lastName, setLastName] = useState(user ? user.lastName : "");
   const [email, setEmail] = useState(user ? user.email : "");
   const [openList, setOpenList] = useState(false);
   const [gender, setGender] = useState(user ? whichGender() : "");
-  const [picture, setPicture] = useState(user ? user.picture.large : "");
-  const [country, setCountry] = useState(user ? user.location.country : "");
-  const [city, setCity] = useState(user ? user.location.city : "");
-  const [street, setStreet] = useState(user ? user.location.street.name : "");
+  const [picture, setPicture] = useState(user ? user.picture : "");
+  const [country, setCountry] = useState(user ? user.country : "");
+  const [city, setCity] = useState(user ? user.city : "");
+  const [street, setStreet] = useState(user ? user.street: "");
 
   const data = {
     gender,
@@ -49,7 +49,6 @@ const UserModal = ({ user, setShowModal ,previusScreen}) => {
     city,
     street,
   };
-  console.log(name);
   const handleSave = () => {
     if (!name || !lastName || !email || !gender || !picture) {
       Alert.alert("OOps", "Field Are Missing", [{ text: "Uderstood" }]);

@@ -1,14 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { UsersData } from "../../UsersData";
 
 const initialState = {
-  value: UsersData,
+  value: null,
 };
 
 export const counterSlice = createSlice({
   name: "users",
   initialState,
   reducers: {
+    getUsers: (state, action) => {
+      state.value = action.payload;
+    },
     delteUser: (state, action) => {
       state.value = state.value.filter(
         (user) => user.name.first !== action.payload
@@ -21,12 +23,11 @@ export const counterSlice = createSlice({
       const obj = state.value.find(
         (user) => user.name.first === action.payload
       );
-      console.log(action.payload);
     },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { delteUser, addUser, editUser } = counterSlice.actions;
+export const { delteUser, addUser, editUser, getUsers } = counterSlice.actions;
 
 export default counterSlice.reducer;

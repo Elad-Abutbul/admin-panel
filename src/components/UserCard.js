@@ -10,7 +10,7 @@ import React, { useEffect, useState } from "react";
 import { MaterialIcons } from "@expo/vector-icons";
 import DeleteAlert from "./DeleteAlert";
 import UserModal from "./UserModal";
-const UserCard = ({ user, index }) => {
+const UserCard = ({ user }) => {
   const [showAlert, setShowAlert] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const handleModal = () => {
@@ -37,15 +37,15 @@ const UserCard = ({ user, index }) => {
       <TouchableOpacity style={{ flex: 1 }} onPress={handleModal}>
         <View style={[styles.content, genderStyling()]}>
           {showAlert ? (
-            <DeleteAlert setShowAlert={setShowAlert} name={user.name.first} />
+            <DeleteAlert setShowAlert={setShowAlert} name={user.firstName} />
           ) : (
             <>
               <Image
                 style={styles.image}
-                source={{ uri: user.picture.large }}
+                source={{ uri: user.picture }}
               />
-              <Text style={styles.text}>{user.name.first}</Text>
-              <Text style={styles.text}>{user.name.last}</Text>
+              <Text style={styles.text}>{user.firstName}</Text>
+              <Text style={styles.text}>{user.lastName}</Text>
             </>
           )}
         </View>
