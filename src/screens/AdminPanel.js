@@ -1,12 +1,22 @@
-import { View } from "react-native";
+import { View, FlatList, StyleSheet, Dimensions } from "react-native";
 import React from "react";
-import UserFlatList from "../components/UsersFlatList";
-const AdminPanel = ({ setShowModel, showModel }) => {
+import { useSelector } from "react-redux";
+import UserCard from "../components/UserCard";
+const AdminPanel = () => {
+  const users = useSelector((state) => state.users.value);
   return (
-    <View>
-      <UserFlatList />
+    <View style={styles.container}>
+      <FlatList
+        data={users}
+        renderItem={(user) => <UserCard user={user.item} />}
+        keyExtractor={(user) => user.login.uuid}
+      />
     </View>
   );
 };
-
+const styles = StyleSheet.create({
+  container: {
+    flex: 8,
+  },
+});
 export default AdminPanel;

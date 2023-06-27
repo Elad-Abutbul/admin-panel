@@ -108,13 +108,13 @@ export const UsersData = [
     },
     picture: {
       large: "https://randomuser.me/api/portraits/women/90.jpg",
-      medium: "https://randomuser.me/api/portraits/med/women/90.jpg",
+      medium: "https://randomalemuser.me/api/portraits/med/women/90.jpg",
       thumbnail: "https://randomuser.me/api/portraits/thumb/women/90.jpg",
     },
     nat: "BR",
   },
   {
-    gender: "male",
+    gender: "",
     name: {
       title: "Mr",
       first: "Lyndon",

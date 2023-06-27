@@ -11,14 +11,13 @@ import {
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import DropDownList from "react-native-dropdown-picker";
 import { useDispatch, useSelector } from "react-redux";
-import { removeModal } from "../redux/features/witchModalSlice";
 import { addUser, editUser } from "../redux/features/userSlice";
 const WIDTH = Dimensions.get("screen").width;
 const HEIGHT = Dimensions.get("screen").height;
-const UserModal = ({ user, setShowModal }) => {
+const UserModal = ({ user, setShowModal ,previusScreen}) => {
   const whichGender = () => {
     if (user) {
       if (user.gender == "male") return "Mr";
@@ -29,7 +28,6 @@ const UserModal = ({ user, setShowModal }) => {
     { label: "Mr", value: "Mr" },
     { label: "Ms", value: "Ms" },
   ];
-  const witchModal = useSelector((state) => state.witchModal.value);
   const dispatch = useDispatch();
   const [name, setName] = useState(user ? user.name.first : "");
   const [lastName, setLastName] = useState(user ? user.name.last : "");
@@ -55,27 +53,22 @@ const UserModal = ({ user, setShowModal }) => {
   const handleSave = () => {
     if (!name || !lastName || !email || !gender || !picture) {
       Alert.alert("OOps", "Field Are Missing", [{ text: "Uderstood" }]);
-    } else if (witchModal === "add") {
-      dispatch(addUser(data));
-    } else {
-      dispatch(editUser(data));
     }
     return exit();
   };
   const exit = () => {
-    dispatch(removeModal());
     setShowModal(false);
   };
   return (
     <TouchableOpacity disabled={true} style={styles.container}>
       <View style={styles.modal}>
         <View style={styles.header}>
-          <Text>{witchModal === "edit" ? "Edit" : "Add"} User</Text>
+          <Text>{previusScreen === "edit" ? "Edit" : "Add"} User</Text>
           <View style={styles.exit}>
             <Ionicons
               name="exit-sharp"
               size={24}
-              color="black"
+              color="white"
               onPress={exit}
             />
           </View>
@@ -166,7 +159,7 @@ const styles = StyleSheet.create({
   modal: {
     height: HEIGHT - 300,
     width: WIDTH - 80,
-    backgroundColor: "white",
+    backgroundColor: "#3a4f50",
     borderRadius: 10,
     alignItems: "center",
     justifyContent: "center",
@@ -178,7 +171,7 @@ const styles = StyleSheet.create({
   input: {
     padding: 10,
     borderRadius: 10,
-    backgroundColor: "#333",
+    backgroundColor: "#1b2223",
     marginVertical: 20,
   },
   header: {

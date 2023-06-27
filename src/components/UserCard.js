@@ -10,19 +10,18 @@ import React, { useEffect, useState } from "react";
 import { MaterialIcons } from "@expo/vector-icons";
 import DeleteAlert from "./DeleteAlert";
 import UserModal from "./UserModal";
-import { useDispatch, useSelector } from "react-redux";
-import { selectModal } from "../redux/features/witchModalSlice";
 const UserCard = ({ user, index }) => {
   const [showAlert, setShowAlert] = useState(false);
-  const witchModal = useSelector((state) => state.witchModal.value);
-  const dispatch = useDispatch();
   const [showModal, setShowModal] = useState(false);
-  const editUser = witchModal === "edit" ? user : undefined;
   const handleModal = () => {
-    dispatch(selectModal("edit"));
     setShowModal(true);
   };
-
+  const genderStyling = () => {
+    if (user.gender === "male") {
+      return styles.male;
+    }
+    return styles.female;
+  };
   return (
     <View style={styles.container}>
       <View>
@@ -36,7 +35,7 @@ const UserCard = ({ user, index }) => {
         </TouchableOpacity>
       </View>
       <TouchableOpacity style={{ flex: 1 }} onPress={handleModal}>
-        <View style={styles.content}>
+        <View style={[styles.content, genderStyling()]}>
           {showAlert ? (
             <DeleteAlert setShowAlert={setShowAlert} name={user.name.first} />
           ) : (
@@ -45,8 +44,8 @@ const UserCard = ({ user, index }) => {
                 style={styles.image}
                 source={{ uri: user.picture.large }}
               />
-              <Text>{user.name.first}</Text>
-              <Text>{user.name.last}</Text>
+              <Text style={styles.text}>{user.name.first}</Text>
+              <Text style={styles.text}>{user.name.last}</Text>
             </>
           )}
         </View>
@@ -57,7 +56,11 @@ const UserCard = ({ user, index }) => {
         visible={showModal}
         onRequestClose={() => setShowModal(false)}
       >
-        <UserModal user={editUser} setShowModal={setShowModal} />
+        <UserModal
+          user={user}
+          setShowModal={setShowModal}
+          previusScreen="edit"
+        />
       </Modal>
     </View>
   );
@@ -67,20 +70,31 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flexDirection: "row",
     margin: 20,
+    gap: 15,
   },
   content: {
     flexDirection: "row",
     justifyContent: "space-evenly",
     alignItems: "center",
-    borderColor: "black",
-    borderWidth: 2,
     padding: 10,
     borderRadius: 30,
+    backgroundColor: "#3a4f50",
   },
   image: {
     width: 60,
     height: 60,
     borderRadius: 50,
+  },
+  text: {
+    color: "white",
+  },
+  male: {
+    borderColor: "lightblue",
+    borderWidth: 1,
+  },
+  female: {
+    borderColor: "pink",
+    borderWidth: 1,
   },
 });
 export default UserCard;

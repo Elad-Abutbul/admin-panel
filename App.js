@@ -10,13 +10,11 @@ export default function App() {
   const url = "https://randomuser.me/api/?results=10";
   return (
     <Provider store={store}>
-      <View style={styles.container}>
-        <StatusBar style="auto" />
-        <SafeAreaView>
-          <Header />
-          <AdminPanel />
-        </SafeAreaView>
-      </View>
+      <StatusBar style="auto" />
+      <SafeAreaView style={styles.container}>
+        <Header />
+        <AdminPanel />
+      </SafeAreaView>
     </Provider>
   );
 }
@@ -24,6 +22,6 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#9999",
+    backgroundColor: "#1b2223",
   },
 });
