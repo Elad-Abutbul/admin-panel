@@ -11,7 +11,6 @@ const AdminPanel = () => {
     const data = async () => {
       const res = await axios.get("https://randomuser.me/api/?results=10");
       const usersDataFilter = res.data.results.map((user) => {
-        // console.log(user.picture.large);
         return {
           gender: user.gender,
           title: user.name.title,
@@ -25,7 +24,6 @@ const AdminPanel = () => {
           id: user.login.uuid,
         };
       });
-      // console.log(usersDataFilter);
       dispatch(getUsers(usersDataFilter));
     };
     data();

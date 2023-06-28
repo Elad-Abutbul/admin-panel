@@ -15,11 +15,11 @@ export default function App() {
 
   return (
     <Provider store={store}>
-      <StatusBar style="light" />
       <SafeAreaView style={styles.container}>
         <Header />
         <AdminPanel />
       </SafeAreaView>
+      <StatusBar hidden />
     </Provider>
   );
 }

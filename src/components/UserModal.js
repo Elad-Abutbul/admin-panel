@@ -3,11 +3,11 @@ import {
   Text,
   TextInput,
   StyleSheet,
-  TouchableOpacity,
   Dimensions,
   Button,
   Alert,
   ScrollView,
+  TouchableOpacity,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
@@ -17,7 +17,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addUser, editUser } from "../redux/features/userSlice";
 const WIDTH = Dimensions.get("screen").width;
 const HEIGHT = Dimensions.get("screen").height;
-const UserModal = ({ user, setShowModal ,previusScreen}) => {
+const UserModal = ({ user, setShowModal, previusScreen }) => {
   const whichGender = () => {
     if (user) {
       if (user.gender == "male") return "Mr";
@@ -29,7 +29,7 @@ const UserModal = ({ user, setShowModal ,previusScreen}) => {
     { label: "Ms", value: "Ms" },
   ];
   const dispatch = useDispatch();
-  const [name, setName] = useState(user ? user.firstName : "");
+  const [firstName, setFirstName] = useState(user ? user.firstName : "");
   const [lastName, setLastName] = useState(user ? user.lastName : "");
   const [email, setEmail] = useState(user ? user.email : "");
   const [openList, setOpenList] = useState(false);
@@ -37,21 +37,26 @@ const UserModal = ({ user, setShowModal ,previusScreen}) => {
   const [picture, setPicture] = useState(user ? user.picture : "");
   const [country, setCountry] = useState(user ? user.country : "");
   const [city, setCity] = useState(user ? user.city : "");
-  const [street, setStreet] = useState(user ? user.street: "");
+  const [street, setStreet] = useState(user ? user.street : "");
 
-  const data = {
+  const userData = {
     gender,
-    name,
+    firstName,
     lastName,
     email,
     picture,
     country,
     city,
     street,
+    id: previusScreen === "add" ? 1 : user.id,
   };
   const handleSave = () => {
-    if (!name || !lastName || !email || !gender || !picture) {
+    if (!firstName || !lastName || !email || !gender || !picture) {
       Alert.alert("OOps", "Field Are Missing", [{ text: "Uderstood" }]);
+    } else if (previusScreen === "add") {
+      dispatch(addUser(userData));
+    } else {
+      dispatch(editUser({ id: user.id, editUserObj: userData }));
     }
     return exit();
   };
@@ -89,15 +94,15 @@ const UserModal = ({ user, setShowModal ,previusScreen}) => {
               <Text>Enter First Name..</Text>
               <TextInput
                 style={styles.input}
-                onChange={(text) => setName(text)}
-                value={name}
+                onChange={(event) => setFirstName(event.nativeEvent.text)}
+                value={firstName}
               />
             </View>
             <View>
               <Text>Enter Last Name..</Text>
               <TextInput
                 style={styles.input}
-                onChange={(text) => setLastName(text)}
+                onChange={(event) => setLastName(event.nativeEvent.text)}
                 value={lastName}
               />
             </View>
@@ -105,7 +110,7 @@ const UserModal = ({ user, setShowModal ,previusScreen}) => {
               <Text>Enter Email..</Text>
               <TextInput
                 style={styles.input}
-                onChange={(text) => setEmail(text)}
+                onChange={(event) => setEmail(event.nativeEvent.text)}
                 value={email}
               />
             </View>
@@ -113,7 +118,7 @@ const UserModal = ({ user, setShowModal ,previusScreen}) => {
               <Text>Enter Picture..</Text>
               <TextInput
                 style={styles.input}
-                onChange={(text) => setPicture(text)}
+                onChange={(event) => setPicture(event.nativeEvent.text)}
                 value={picture}
               />
             </View>
@@ -121,7 +126,7 @@ const UserModal = ({ user, setShowModal ,previusScreen}) => {
               <Text>Enter Country..</Text>
               <TextInput
                 style={styles.input}
-                onChange={(text) => setCountry(text)}
+                onChange={(event) => setCountry(event.nativeEvent.text)}
                 value={country}
               />
             </View>
@@ -129,7 +134,7 @@ const UserModal = ({ user, setShowModal ,previusScreen}) => {
               <Text>Enter City..</Text>
               <TextInput
                 style={styles.input}
-                onChange={(text) => setCity(text)}
+                onChange={(event) => setCity(event.nativeEvent.text)}
                 value={city}
               />
             </View>
@@ -137,14 +142,19 @@ const UserModal = ({ user, setShowModal ,previusScreen}) => {
               <Text>Enter Street..</Text>
               <TextInput
                 style={styles.input}
-                onChange={(text) => setStreet(text)}
+                onChange={(event) => setStreet(event.nativeEvent.text)}
                 value={street}
               />
             </View>
           </ScrollView>
         </View>
-
-        <Button title="save" onPress={handleSave} />
+        <View style={styles.saveBtn}>
+          <TouchableOpacity>
+            <Text onPress={handleSave} style={{ color: "white" }}>
+              Save
+            </Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </TouchableOpacity>
   );
@@ -156,7 +166,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   modal: {
-    height: HEIGHT - 300,
+    height: HEIGHT - 200,
     width: WIDTH - 80,
     backgroundColor: "#3a4f50",
     borderRadius: 10,
@@ -180,6 +190,12 @@ const styles = StyleSheet.create({
   },
   exit: {
     alignSelf: "flex-end",
+  },
+  saveBtn: {
+    backgroundColor: "darkblue",
+    padding: 7,
+    marginBottom: 20,
+    borderRadius: 50,
   },
 });
 export default UserModal;

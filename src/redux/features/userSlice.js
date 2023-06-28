@@ -17,12 +17,15 @@ export const counterSlice = createSlice({
       );
     },
     addUser: (state, action) => {
-      state.unshift(action.payload);
+      state.value.unshift(action.payload);
     },
     editUser: (state, action) => {
-      const obj = state.value.find(
-        (user) => user.name.first === action.payload
-      );
+      const { id, editUserObj } = action.payload;
+      // console.log(editUserObj);
+      const userIndex = state.value.findIndex((user) => user.id === id);
+      if (userIndex !== -1) {
+        state.value[userIndex] = editUserObj;
+      }
     },
   },
 });
