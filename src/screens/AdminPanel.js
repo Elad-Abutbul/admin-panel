@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import UserCard from "../components/UserCard";
 import { getUsers } from "../redux/features/userSlice";
 import axios from "axios";
-const AdminPanel = () => {
+const AdminPanel = ({ witchSort }) => {
   const users = useSelector((state) => state.users.value);
   const dispatch = useDispatch();
   useEffect(() => {
@@ -21,6 +21,7 @@ const AdminPanel = () => {
           country: user.location.country,
           city: user.location.city,
           street: user.location.street.name,
+          age: user.registered.age,
           id: user.login.uuid,
         };
       });
@@ -28,6 +29,18 @@ const AdminPanel = () => {
     };
     data();
   }, []);
+  handleData = () => {
+    // if (witchSort === "all") {
+    //   return users;
+    // } else if (witchSort === "gender") {
+    //   return usersGender;
+    // } else {
+    //   return aToz;
+    // }
+  };
+  useEffect(() => {
+    console.log(users);
+  })
   return (
     <View style={styles.container}>
       <FlatList

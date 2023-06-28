@@ -7,11 +7,11 @@ import UserModal from "../components/UserModal";
 import CheckBox from "react-native-check-box";
 import { FontAwesome } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native";
-const Header = () => {
+import { usersFilterAtoZ } from "../redux/features/userSlice";
+const Header = ({ handleSort, witchSort }) => {
   const dispatch = useDispatch();
   const [showModal, setShowModal] = useState(false);
   const [showSort, setShowSort] = useState(false);
-  const [checkBoxState, setCheckBoxState] = useState("");
   return (
     <View style={styles.container}>
       <View style={styles.titleContainer}>
@@ -24,17 +24,11 @@ const Header = () => {
               <View style={styles.checkBoxContainer}>
                 <View style={styles.itemCheckBox}>
                   <CheckBox
-                    isChecked={checkBoxState === "gender"}
-                    onClick={() => setCheckBoxState("gender")}
-                    checkBoxColor="white"
-                    checkedCheckBoxColor="green"
-                  />
-                  <Text style={styles.text}>Gender</Text>
-                </View>
-                <View style={styles.itemCheckBox}>
-                  <CheckBox
-                    isChecked={checkBoxState === "a-z"}
-                    onClick={() => setCheckBoxState("a-z")}
+                    isChecked={witchSort === "a-z"}
+                    onClick={() => {
+                      handleSort("a-z");
+                      dispatch(usersFilterAtoZ());
+                    }}
                     checkBoxColor="white"
                     checkedCheckBoxColor="green"
                   />
@@ -42,12 +36,21 @@ const Header = () => {
                 </View>
                 <View style={styles.itemCheckBox}>
                   <CheckBox
-                    isChecked={checkBoxState === ""}
-                    onClick={() => setCheckBoxState("")}
+                    isChecked={witchSort === "name"}
+                    onClick={() => handleSort("name")}
                     checkBoxColor="white"
                     checkedCheckBoxColor="green"
                   />
-                  <Text style={styles.text}>All</Text>
+                  <Text style={styles.text}>Name</Text>
+                </View>
+                <View style={styles.itemCheckBox}>
+                  <CheckBox
+                    isChecked={witchSort === "email"}
+                    onClick={() => handleSort("email")}
+                    checkBoxColor="white"
+                    checkedCheckBoxColor="green"
+                  />
+                  <Text style={styles.text}>Email</Text>
                 </View>
               </View>
             ) : (

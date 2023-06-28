@@ -12,12 +12,16 @@ import { getUsers } from "./src/redux/features/userSlice";
 
 export default function App() {
   const url = "https://randomuser.me/api/?results=10";
-
+  const [witchSort, setWitchSort] = useState("All");
+  const handleSort = (sortText) => {
+    setWitchSort(sortText);
+    console.log(witchSort);
+  };
   return (
     <Provider store={store}>
       <SafeAreaView style={styles.container}>
-        <Header />
-        <AdminPanel />
+        <Header handleSort={handleSort} witchSort={witchSort} />
+        <AdminPanel witchSort={witchSort} />
       </SafeAreaView>
       <StatusBar hidden />
     </Provider>

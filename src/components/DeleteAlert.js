@@ -1,13 +1,13 @@
 import { View, Text, Button, StyleSheet } from "react-native";
 import React from "react";
 import { useDispatch } from "react-redux";
-import { delteUser } from "../redux/features/userSlice";
+import { deleteUser } from "../redux/features/userSlice";
 const DeleteAlert = ({ setShowAlert, name }) => {
   const dispatch = useDispatch();
   const handlePress = (text) => {
     setShowAlert(false);
     if (text === "delete") {
-      return dispatch(delteUser(name));
+      return dispatch(deleteUser(name));
     }
   };
   return (

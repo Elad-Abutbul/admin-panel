@@ -11,7 +11,7 @@ export const counterSlice = createSlice({
     getUsers: (state, action) => {
       state.value = action.payload;
     },
-    delteUser: (state, action) => {
+    deleteUser: (state, action) => {
       state.value = state.value.filter(
         (user) => user.name.first !== action.payload
       );
@@ -21,16 +21,21 @@ export const counterSlice = createSlice({
     },
     editUser: (state, action) => {
       const { id, editUserObj } = action.payload;
-      // console.log(editUserObj);
       const userIndex = state.value.findIndex((user) => user.id === id);
       if (userIndex !== -1) {
         state.value[userIndex] = editUserObj;
       }
     },
+    usersFilterAtoZ: (state) => {
+      state.value = state.value.sort((a, b) =>
+        a.firstName.localeCompare(b.firstName)
+      );
+      },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { delteUser, addUser, editUser, getUsers } = counterSlice.actions;
+export const { deleteUser, addUser, editUser, getUsers, usersFilterAtoZ } =
+  counterSlice.actions;
 
 export default counterSlice.reducer;
