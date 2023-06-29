@@ -5,23 +5,24 @@ import { store } from "./src/redux/store";
 import { Provider, useSelector } from "react-redux";
 import Header from "./src/screens/Header";
 import { useEffect, useState } from "react";
-import { getJsonUserData, getUserData } from "./src/UsersData";
-import { useDispatch } from "react-redux";
-import axios from "axios";
-import { getUsers } from "./src/redux/features/userSlice";
 
 export default function App() {
-  const url = "https://randomuser.me/api/?results=10";
-  const [witchSort, setWitchSort] = useState("All");
+  const [witchSort, setWitchSort] = useState("Default");
+  const [searchInp, setSearchInp] = useState("");
   const handleSort = (sortText) => {
     setWitchSort(sortText);
-    console.log(witchSort);
   };
+
   return (
     <Provider store={store}>
       <SafeAreaView style={styles.container}>
-        <Header handleSort={handleSort} witchSort={witchSort} />
-        <AdminPanel witchSort={witchSort} />
+        <Header
+          handleSort={handleSort}
+          witchSort={witchSort}
+          setSearchInp={setSearchInp}
+          searchInp={searchInp}
+        />
+        <AdminPanel witchSort={witchSort} searchInp={searchInp} />
       </SafeAreaView>
       <StatusBar hidden />
     </Provider>

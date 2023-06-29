@@ -1,6 +1,6 @@
 import { View, Text, Button, StyleSheet, Dimensions } from "react-native";
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { TextInput } from "react-native";
 import { Modal } from "react-native";
 import UserModal from "../components/UserModal";
@@ -8,10 +8,13 @@ import CheckBox from "react-native-check-box";
 import { FontAwesome } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native";
 import { usersFilterAtoZ } from "../redux/features/userSlice";
-const Header = ({ handleSort, witchSort }) => {
+const Header = ({ handleSort, witchSort, setSearchInp, searchInp }) => {
   const dispatch = useDispatch();
   const [showModal, setShowModal] = useState(false);
   const [showSort, setShowSort] = useState(false);
+  useEffect(() => {
+  console.log(showModal);
+})
   return (
     <View style={styles.container}>
       <View style={styles.titleContainer}>
@@ -36,15 +39,6 @@ const Header = ({ handleSort, witchSort }) => {
                 </View>
                 <View style={styles.itemCheckBox}>
                   <CheckBox
-                    isChecked={witchSort === "name"}
-                    onClick={() => handleSort("name")}
-                    checkBoxColor="white"
-                    checkedCheckBoxColor="green"
-                  />
-                  <Text style={styles.text}>Name</Text>
-                </View>
-                <View style={styles.itemCheckBox}>
-                  <CheckBox
                     isChecked={witchSort === "email"}
                     onClick={() => handleSort("email")}
                     checkBoxColor="white"
@@ -52,12 +46,27 @@ const Header = ({ handleSort, witchSort }) => {
                   />
                   <Text style={styles.text}>Email</Text>
                 </View>
+                <View style={styles.itemCheckBox}>
+                  <CheckBox
+                    isChecked={witchSort === "Default"}
+                    onClick={() => handleSort("Default")}
+                    checkBoxColor="white"
+                    checkedCheckBoxColor="green"
+                  />
+                  <Text style={styles.text}>Default</Text>
+                </View>
               </View>
             ) : (
               <TextInput
-                placeholder="Search By Name.."
+                placeholder={
+                  witchSort === "email"
+                    ? "Search By Email.."
+                    : "Search By Name.."
+                }
                 placeholderTextColor="white"
                 style={styles.inp}
+                value={searchInp}
+                onChange={(event) => setSearchInp(event.nativeEvent.text)}
               />
             )}
             <TouchableOpacity onPress={() => setShowSort(!showSort)}>
@@ -65,8 +74,8 @@ const Header = ({ handleSort, witchSort }) => {
             </TouchableOpacity>
           </View>
         </View>
-        <TouchableOpacity onPress={() => setShowModal(true)}>
-          <Button title="Add User" style={styles.text} />
+        <TouchableOpacity >
+          <Button title="Add User" style={styles.text} onPress={() => setShowModal(true)}/>
         </TouchableOpacity>
       </View>
       <View>

@@ -4,9 +4,26 @@ import { useDispatch, useSelector } from "react-redux";
 import UserCard from "../components/UserCard";
 import { getUsers } from "../redux/features/userSlice";
 import axios from "axios";
-const AdminPanel = ({ witchSort }) => {
+const AdminPanel = ({ witchSort, searchInp }) => {
   const users = useSelector((state) => state.users.value);
   const dispatch = useDispatch();
+  const handleSearch = () => {
+    if (searchInp !== "") {
+      if (witchSort === "Default" || witchSort === "a-z") {
+        const searchFirstName = users.filter((user) =>
+          user.firstName.toLowerCase().includes(searchInp.toLowerCase())
+        );
+        return searchFirstName;
+      } else {
+        const searchEmail = users.filter((user) =>
+          user.email.toLowerCase().includes(searchInp.toLowerCase())
+        );
+        return searchEmail;
+      }
+    } else {
+      return users;
+    }
+  };
   useEffect(() => {
     const data = async () => {
       const res = await axios.get("https://randomuser.me/api/?results=10");
@@ -29,22 +46,11 @@ const AdminPanel = ({ witchSort }) => {
     };
     data();
   }, []);
-  handleData = () => {
-    // if (witchSort === "all") {
-    //   return users;
-    // } else if (witchSort === "gender") {
-    //   return usersGender;
-    // } else {
-    //   return aToz;
-    // }
-  };
-  useEffect(() => {
-    console.log(users);
-  })
+
   return (
     <View style={styles.container}>
       <FlatList
-        data={users}
+        data={handleSearch()}
         renderItem={(user) => <UserCard user={user.item} />}
         keyExtractor={(user) => user.id}
       />
