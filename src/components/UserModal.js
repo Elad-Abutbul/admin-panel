@@ -4,13 +4,13 @@ import {
   TextInput,
   StyleSheet,
   Dimensions,
-  Button,
   Alert,
   ScrollView,
   TouchableOpacity,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-
+import { TextInput_uk } from "../ui-kit/regular/TextInput_uk";
+import { Text_uk } from "../ui-kit/regular/Text_uk";
 import React, { useState } from "react";
 import DropDownList from "react-native-dropdown-picker";
 import { useDispatch, useSelector } from "react-redux";
@@ -67,7 +67,8 @@ const UserModal = ({ user, setShowModal, previusScreen }) => {
     <TouchableOpacity disabled={true} style={styles.container}>
       <View style={styles.modal}>
         <View style={styles.header}>
-          <Text>{previusScreen === "edit" ? "Edit" : "Add"} User</Text>
+          <Text_uk textValue={previusScreen === "edit" ? "Edit" : "Add"} />
+          {/* <Text>{previusScreen === "edit" ? "Edit" : "Add"} User</Text> */}
           <View style={styles.exit}>
             <Ionicons
               name="exit-sharp"
@@ -91,7 +92,7 @@ const UserModal = ({ user, setShowModal, previusScreen }) => {
               style={styles.input}
             />
             <View>
-              <Text>Enter First Name..</Text>
+              <Text_uk textValue={"Enter first name.."} />
               <TextInput
                 style={styles.input}
                 onChange={(event) => setFirstName(event.nativeEvent.text)}
@@ -99,7 +100,7 @@ const UserModal = ({ user, setShowModal, previusScreen }) => {
               />
             </View>
             <View>
-              <Text>Enter Last Name..</Text>
+              <Text_uk textValue={"Enterlast name.."} />
               <TextInput
                 style={styles.input}
                 onChange={(event) => setLastName(event.nativeEvent.text)}
@@ -107,7 +108,7 @@ const UserModal = ({ user, setShowModal, previusScreen }) => {
               />
             </View>
             <View>
-              <Text>Enter Email..</Text>
+              <Text_uk textValue={"Enter email.."} />
               <TextInput
                 style={styles.input}
                 onChange={(event) => setEmail(event.nativeEvent.text)}
@@ -115,7 +116,7 @@ const UserModal = ({ user, setShowModal, previusScreen }) => {
               />
             </View>
             <View>
-              <Text>Enter Picture..</Text>
+              <Text_uk textValue={"Enter picture.."} />
               <TextInput
                 style={styles.input}
                 onChange={(event) => setPicture(event.nativeEvent.text)}
@@ -123,7 +124,7 @@ const UserModal = ({ user, setShowModal, previusScreen }) => {
               />
             </View>
             <View>
-              <Text>Enter Country..</Text>
+              <Text_uk textValue={"Enter country.."} />
               <TextInput
                 style={styles.input}
                 onChange={(event) => setCountry(event.nativeEvent.text)}
@@ -131,7 +132,7 @@ const UserModal = ({ user, setShowModal, previusScreen }) => {
               />
             </View>
             <View>
-              <Text>Enter City..</Text>
+              <Text_uk textValue={"Enter city.."} style={styles.text} />
               <TextInput
                 style={styles.input}
                 onChange={(event) => setCity(event.nativeEvent.text)}
@@ -139,7 +140,7 @@ const UserModal = ({ user, setShowModal, previusScreen }) => {
               />
             </View>
             <View>
-              <Text>Enter Street..</Text>
+              <Text_uk textValue={"Enter street.."} />
               <TextInput
                 style={styles.input}
                 onChange={(event) => setStreet(event.nativeEvent.text)}
@@ -196,6 +197,9 @@ const styles = StyleSheet.create({
     padding: 7,
     marginBottom: 20,
     borderRadius: 50,
+  },
+  text: {
+    color: "white",
   },
 });
 export default UserModal;

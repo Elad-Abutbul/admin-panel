@@ -1,10 +1,10 @@
 import { TextInput } from "react-native";
-export function TextInput_uk({ stateFunction, stateValue, styleTextInput }) {
+export function TextInput_uk({ stateFunction, stateValue }) {
   return (
     <TextInput
-      style={styleTextInput}
       onChange={(event) => stateFunction(event.nativeEvent.text)}
       value={stateValue}
     />
   );
 }
+
