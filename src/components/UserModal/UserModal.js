@@ -20,6 +20,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addUser, editUser } from "../../redux/features/userSlice";
 import ViewContent from "./comps/ViewContent";
+import { CustomBtn_uk } from "../../ui-kit/FormModal/CustomBtn_uk";
 const WIDTH = Dimensions.get("screen").width;
 const HEIGHT = Dimensions.get("screen").height;
 const UserModal = ({ user, setShowModal, previusScreen }) => {
@@ -95,21 +96,45 @@ const UserModal = ({ user, setShowModal, previusScreen }) => {
               stateFunction={setGender}
               textPlaceHolder="Select title"
             />
-            <ViewContent stateFunction={setFirstName} stateValue={firstName} textValue={"Enter first name.."}/>
-            <ViewContent stateFunction={setLastName} stateValue={lastName} textValue={"Enter last name.."}/>
-            <ViewContent stateFunction={setEmail} stateValue={email} textValue={"Enter email.."}/>
-            <ViewContent stateFunction={setPicture} stateValue={picture} textValue={"Enter picture.."}/>
-            <ViewContent stateFunction={setCountry} stateValue={country} textValue={"Enter country.."}/>
-            <ViewContent stateFunction={setCity} stateValue={city} textValue={"Enter City"}/>
-            <ViewContent stateFunction={setStreet} stateValue={street} textValue={"Enter street.."}/>
+            <ViewContent
+              stateFunction={setFirstName}
+              stateValue={firstName}
+              textValue={"Enter first name.."}
+            />
+            <ViewContent
+              stateFunction={setLastName}
+              stateValue={lastName}
+              textValue={"Enter last name.."}
+            />
+            <ViewContent
+              stateFunction={setEmail}
+              stateValue={email}
+              textValue={"Enter email.."}
+            />
+            <ViewContent
+              stateFunction={setPicture}
+              stateValue={picture}
+              textValue={"Enter picture.."}
+            />
+            <ViewContent
+              stateFunction={setCountry}
+              stateValue={country}
+              textValue={"Enter country.."}
+            />
+            <ViewContent
+              stateFunction={setCity}
+              stateValue={city}
+              textValue={"Enter City"}
+            />
+            <ViewContent
+              stateFunction={setStreet}
+              stateValue={street}
+              textValue={"Enter street.."}
+            />
           </ScrollView>
         </View>
         <View style={styles.saveBtn}>
-          <TouchableOpacity>
-            <Text onPress={handleSave} style={{ color: "white" }}>
-              Save
-            </Text>
-          </TouchableOpacity>
+          <CustomBtn_uk handleFunc={handleSave} textValue={"Save"} />
         </View>
       </View>
     </TouchableOpacity>

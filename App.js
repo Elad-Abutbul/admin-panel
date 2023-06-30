@@ -4,15 +4,17 @@ import AdminPanel from "./src/screens/AdminPanel";
 import { store } from "./src/redux/store";
 import { Provider } from "react-redux";
 import Header from "./src/screens/Header";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function App() {
-  const [witchSort, setWitchSort] = useState("Default");
+  const [witchSort, setWitchSort] = useState("default");
   const [searchInp, setSearchInp] = useState("");
   const handleSort = (sortText) => {
     setWitchSort(sortText);
   };
-
+  useEffect(() => {
+  console.log(witchSort)
+})
   return (
     <Provider store={store}>
       <SafeAreaView style={styles.container}>

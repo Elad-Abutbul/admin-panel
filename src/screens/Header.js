@@ -1,15 +1,13 @@
-import { View, Text, Button, StyleSheet, Dimensions } from "react-native";
+import { View, Text, Button, StyleSheet } from "react-native";
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
 import { TextInput } from "react-native";
 import { Modal } from "react-native";
 import UserModal from "../components/UserModal/UserModal";
-import CheckBox from "react-native-check-box";
 import { FontAwesome } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native";
-import { usersFilterAtoZ } from "../redux/features/userSlice";
+import { Text_uk } from "../ui-kit/regular";
+import { CheckBox_uk } from "../ui-kit/header/CheckBox_uk";
 const Header = ({ handleSort, witchSort, setSearchInp, searchInp }) => {
-  const dispatch = useDispatch();
   const [showModal, setShowModal] = useState(false);
   const [showSort, setShowSort] = useState(false);
 
@@ -24,34 +22,16 @@ const Header = ({ handleSort, witchSort, setSearchInp, searchInp }) => {
             {showSort ? (
               <View style={styles.checkBoxContainer}>
                 <View style={styles.itemCheckBox}>
-                  <CheckBox
-                    isChecked={witchSort === "a-z"}
-                    onClick={() => {
-                      handleSort("a-z");
-                      dispatch(usersFilterAtoZ());
-                    }}
-                    checkBoxColor="white"
-                    checkedCheckBoxColor="green"
-                  />
-                  <Text style={styles.text}>A-Z</Text>
+                  <CheckBox_uk witchSort={witchSort} handleSort={handleSort} textCheck={"a-z"} />
+                  <Text_uk textValue={"A-Z"} />
                 </View>
                 <View style={styles.itemCheckBox}>
-                  <CheckBox
-                    isChecked={witchSort === "email"}
-                    onClick={() => handleSort("email")}
-                    checkBoxColor="white"
-                    checkedCheckBoxColor="green"
-                  />
-                  <Text style={styles.text}>Email</Text>
+                  <CheckBox_uk witchSort={witchSort} handleSort={handleSort} textCheck={"email"} />
+                  <Text_uk textValue={"Email"} />
                 </View>
                 <View style={styles.itemCheckBox}>
-                  <CheckBox
-                    isChecked={witchSort === "Default"}
-                    onClick={() => handleSort("Default")}
-                    checkBoxColor="white"
-                    checkedCheckBoxColor="green"
-                  />
-                  <Text style={styles.text}>Default</Text>
+                  <CheckBox_uk witchSort={witchSort} handleSort={handleSort} textCheck={"default"}/>
+                  <Text_uk textValue={"Default"} />
                 </View>
               </View>
             ) : (

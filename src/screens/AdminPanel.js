@@ -11,7 +11,7 @@ const AdminPanel = ({ witchSort, searchInp }) => {
   const dispatch = useDispatch();
   const handleSearch = () => {
     if (searchInp !== "") {
-      if (witchSort === "Default" || witchSort === "a-z") {
+      if (witchSort === "default" || witchSort === "a-z") {
         const searchFirstName = users.filter((user) =>
           user.firstName.toLowerCase().includes(searchInp.toLowerCase())
         );

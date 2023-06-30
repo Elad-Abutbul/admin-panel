@@ -1,8 +1,8 @@
 import { TouchableOpacity, Text } from "react-native";
-export function customBtn({ styleCustomBtn, handleFunc }) {
+export function CustomBtn_uk({ textValue, handleFunc }) {
   return (
-    <TouchableOpacity>
-      <Text onPress={handleFunc} style={styleCustomBtn}></Text>
+    <TouchableOpacity onPress={handleFunc} style={{ color: "white" }}>
+      <Text>{textValue}</Text>
     </TouchableOpacity>
   );
 }
