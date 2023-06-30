@@ -3,6 +3,8 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import UserCard from "../components/UserCard";
 import { getUsers } from "../redux/features/userSlice";
+import "react-native-get-random-values";
+import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
 const AdminPanel = ({ witchSort, searchInp }) => {
   const users = useSelector((state) => state.users.value);
@@ -39,7 +41,7 @@ const AdminPanel = ({ witchSort, searchInp }) => {
           city: user.location.city,
           street: user.location.street.name,
           age: user.registered.age,
-          id: user.login.uuid,
+          id: uuidv4(),
         };
       });
       dispatch(getUsers(usersDataFilter));

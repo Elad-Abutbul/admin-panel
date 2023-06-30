@@ -1,9 +1,9 @@
 import { View, Text, Button, StyleSheet, Dimensions } from "react-native";
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import { TextInput } from "react-native";
 import { Modal } from "react-native";
-import UserModal from "../components/UserModal";
+import UserModal from "../components/UserModal/UserModal";
 import CheckBox from "react-native-check-box";
 import { FontAwesome } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native";
@@ -12,9 +12,7 @@ const Header = ({ handleSort, witchSort, setSearchInp, searchInp }) => {
   const dispatch = useDispatch();
   const [showModal, setShowModal] = useState(false);
   const [showSort, setShowSort] = useState(false);
-  useEffect(() => {
-  console.log(showModal);
-})
+
   return (
     <View style={styles.container}>
       <View style={styles.titleContainer}>
@@ -74,8 +72,12 @@ const Header = ({ handleSort, witchSort, setSearchInp, searchInp }) => {
             </TouchableOpacity>
           </View>
         </View>
-        <TouchableOpacity >
-          <Button title="Add User" style={styles.text} onPress={() => setShowModal(true)}/>
+        <TouchableOpacity>
+          <Button
+            title="Add User"
+            style={styles.text}
+            onPress={() => setShowModal(true)}
+          />
         </TouchableOpacity>
       </View>
       <View>

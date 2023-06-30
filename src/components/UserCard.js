@@ -9,7 +9,7 @@ import {
 import React, { useEffect, useState } from "react";
 import { MaterialIcons } from "@expo/vector-icons";
 import DeleteAlert from "./DeleteAlert";
-import UserModal from "./UserModal";
+import UserModal from "../components/UserModal/UserModal";
 const UserCard = ({ user }) => {
   const [showAlert, setShowAlert] = useState(false);
   const [showModal, setShowModal] = useState(false);
@@ -40,10 +40,7 @@ const UserCard = ({ user }) => {
             <DeleteAlert setShowAlert={setShowAlert} name={user.firstName} />
           ) : (
             <>
-              <Image
-                style={styles.image}
-                source={{ uri: user.picture }}
-              />
+              <Image style={styles.image} source={{ uri: user.picture }} />
               <Text style={styles.text}>{user.firstName}</Text>
               <Text style={styles.text}>{user.lastName}</Text>
             </>

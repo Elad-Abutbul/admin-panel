@@ -8,13 +8,18 @@ import {
   ScrollView,
   TouchableOpacity,
 } from "react-native";
+import {
+  TextInput_uk,
+  Text_uk,
+  DropDownList_uk,
+} from "../../ui-kit/regular/index";
 import { Ionicons } from "@expo/vector-icons";
-import { TextInput_uk } from "../ui-kit/regular/TextInput_uk";
-import { Text_uk } from "../ui-kit/regular/Text_uk";
+import "react-native-get-random-values";
+import { v4 as uuidv4 } from "uuid";
 import React, { useState } from "react";
-import DropDownList from "react-native-dropdown-picker";
 import { useDispatch, useSelector } from "react-redux";
-import { addUser, editUser } from "../redux/features/userSlice";
+import { addUser, editUser } from "../../redux/features/userSlice";
+import ViewContent from "./comps/ViewContent";
 const WIDTH = Dimensions.get("screen").width;
 const HEIGHT = Dimensions.get("screen").height;
 const UserModal = ({ user, setShowModal, previusScreen }) => {
@@ -48,7 +53,7 @@ const UserModal = ({ user, setShowModal, previusScreen }) => {
     country,
     city,
     street,
-    id: previusScreen === "add" ? 1 : user.id,
+    id: previusScreen === "add" ? uuidv4() : user.id,
   };
   const handleSave = () => {
     if (!firstName || !lastName || !email || !gender || !picture) {
@@ -67,8 +72,10 @@ const UserModal = ({ user, setShowModal, previusScreen }) => {
     <TouchableOpacity disabled={true} style={styles.container}>
       <View style={styles.modal}>
         <View style={styles.header}>
-          <Text_uk textValue={previusScreen === "edit" ? "Edit" : "Add"} />
-          {/* <Text>{previusScreen === "edit" ? "Edit" : "Add"} User</Text> */}
+          <Text_uk
+            textValue={previusScreen === "edit" ? "Edit" : "Add"}
+            textValue2={"User"}
+          />
           <View style={styles.exit}>
             <Ionicons
               name="exit-sharp"
@@ -78,75 +85,23 @@ const UserModal = ({ user, setShowModal, previusScreen }) => {
             />
           </View>
         </View>
-
         <View style={styles.content}>
           <ScrollView>
-            <DropDownList
-              setOpen={() => setOpenList(!openList)}
-              open={openList}
-              items={genders}
-              value={gender}
-              setValue={(val) => setGender(val)}
-              placeholder="Select Title"
-              multiple={false}
-              style={styles.input}
+            <DropDownList_uk
+              data={genders}
+              setOpenList={setOpenList}
+              openList={openList}
+              stateValue={gender}
+              stateFunction={setGender}
+              textPlaceHolder="Select title"
             />
-            <View>
-              <Text_uk textValue={"Enter first name.."} />
-              <TextInput
-                style={styles.input}
-                onChange={(event) => setFirstName(event.nativeEvent.text)}
-                value={firstName}
-              />
-            </View>
-            <View>
-              <Text_uk textValue={"Enterlast name.."} />
-              <TextInput
-                style={styles.input}
-                onChange={(event) => setLastName(event.nativeEvent.text)}
-                value={lastName}
-              />
-            </View>
-            <View>
-              <Text_uk textValue={"Enter email.."} />
-              <TextInput
-                style={styles.input}
-                onChange={(event) => setEmail(event.nativeEvent.text)}
-                value={email}
-              />
-            </View>
-            <View>
-              <Text_uk textValue={"Enter picture.."} />
-              <TextInput
-                style={styles.input}
-                onChange={(event) => setPicture(event.nativeEvent.text)}
-                value={picture}
-              />
-            </View>
-            <View>
-              <Text_uk textValue={"Enter country.."} />
-              <TextInput
-                style={styles.input}
-                onChange={(event) => setCountry(event.nativeEvent.text)}
-                value={country}
-              />
-            </View>
-            <View>
-              <Text_uk textValue={"Enter city.."} style={styles.text} />
-              <TextInput
-                style={styles.input}
-                onChange={(event) => setCity(event.nativeEvent.text)}
-                value={city}
-              />
-            </View>
-            <View>
-              <Text_uk textValue={"Enter street.."} />
-              <TextInput
-                style={styles.input}
-                onChange={(event) => setStreet(event.nativeEvent.text)}
-                value={street}
-              />
-            </View>
+            <ViewContent stateFunction={setFirstName} stateValue={firstName} textValue={"Enter first name.."}/>
+            <ViewContent stateFunction={setLastName} stateValue={lastName} textValue={"Enter last name.."}/>
+            <ViewContent stateFunction={setEmail} stateValue={email} textValue={"Enter email.."}/>
+            <ViewContent stateFunction={setPicture} stateValue={picture} textValue={"Enter picture.."}/>
+            <ViewContent stateFunction={setCountry} stateValue={country} textValue={"Enter country.."}/>
+            <ViewContent stateFunction={setCity} stateValue={city} textValue={"Enter City"}/>
+            <ViewContent stateFunction={setStreet} stateValue={street} textValue={"Enter street.."}/>
           </ScrollView>
         </View>
         <View style={styles.saveBtn}>
@@ -197,9 +152,6 @@ const styles = StyleSheet.create({
     padding: 7,
     marginBottom: 20,
     borderRadius: 50,
-  },
-  text: {
-    color: "white",
   },
 });
 export default UserModal;

@@ -2,9 +2,9 @@ import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Button, View, SafeAreaView } from "react-native";
 import AdminPanel from "./src/screens/AdminPanel";
 import { store } from "./src/redux/store";
-import { Provider, useSelector } from "react-redux";
+import { Provider } from "react-redux";
 import Header from "./src/screens/Header";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export default function App() {
   const [witchSort, setWitchSort] = useState("Default");
