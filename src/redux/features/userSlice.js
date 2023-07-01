@@ -27,21 +27,16 @@ export const counterSlice = createSlice({
       }
     },
     usersFilterAtoZ: (state) => {
-      state.value = state.value.sort((a, b) =>
+      const filterarr = state.value.sort((a, b) =>
         a.firstName.localeCompare(b.firstName)
       );
+      return filterarr
     },
-
   },
 });
 
 // Action creators are generated for each case reducer function
-export const {
-  deleteUser,
-  addUser,
-  editUser,
-  getUsers,
-  usersFilterAtoZ,
-} = counterSlice.actions;
+export const { deleteUser, addUser, editUser, getUsers, usersFilterAtoZ } =
+  counterSlice.actions;
 
 export default counterSlice.reducer;

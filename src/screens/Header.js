@@ -7,14 +7,26 @@ import { FontAwesome } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native";
 import { Text_uk } from "../ui-kit/regular";
 import { CheckBox_uk } from "../ui-kit/header/CheckBox_uk";
-const Header = ({ handleSort, witchSort, setSearchInp, searchInp }) => {
+import { FILTER_SORT } from "../constants/FilterAndSort";
+import { HEADER } from "../constants/Header";
+import { PREVIUS_SCREEN } from "../constants/Preivus_screens";
+const Header = ({
+  handleSort,
+  witchFilter,
+  setSearchInp,
+  searchInp,
+  setIf_A_to_Z_on,
+  if_A_to_Z_on,
+}) => {
   const [showModal, setShowModal] = useState(false);
   const [showSort, setShowSort] = useState(false);
 
   return (
     <View style={styles.container}>
       <View style={styles.titleContainer}>
-        <Text style={[styles.titleText, styles.text]}>Admin Panel😎</Text>
+        <Text style={[styles.titleText, styles.text]}>
+          {HEADER.ADMIN_PANEL}
+        </Text>
       </View>
       <View style={styles.elementContainer}>
         <View>
@@ -22,22 +34,34 @@ const Header = ({ handleSort, witchSort, setSearchInp, searchInp }) => {
             {showSort ? (
               <View style={styles.checkBoxContainer}>
                 <View style={styles.itemCheckBox}>
-                  <CheckBox_uk witchSort={witchSort} handleSort={handleSort} textCheck={"a-z"} />
-                  <Text_uk textValue={"A-Z"} />
+                  <CheckBox_uk
+                    witchFilter={if_A_to_Z_on}
+                    handleSort={setIf_A_to_Z_on}
+                    value={!if_A_to_Z_on}
+                  />
+                  <Text_uk textValue={FILTER_SORT.A_TO_Z} />
                 </View>
                 <View style={styles.itemCheckBox}>
-                  <CheckBox_uk witchSort={witchSort} handleSort={handleSort} textCheck={"email"} />
-                  <Text_uk textValue={"Email"} />
+                  <CheckBox_uk
+                    witchFilter={witchFilter}
+                    handleSort={handleSort}
+                    value={FILTER_SORT.EMAIL}
+                  />
+                  <Text_uk textValue={FILTER_SORT.EMAIL} />
                 </View>
                 <View style={styles.itemCheckBox}>
-                  <CheckBox_uk witchSort={witchSort} handleSort={handleSort} textCheck={"default"}/>
-                  <Text_uk textValue={"Default"} />
+                  <CheckBox_uk
+                    witchFilter={witchFilter}
+                    handleSort={handleSort}
+                    value={FILTER_SORT.NAME}
+                  />
+                  <Text_uk textValue={FILTER_SORT.NAME} />
                 </View>
               </View>
             ) : (
               <TextInput
                 placeholder={
-                  witchSort === "email"
+                  witchFilter === "email"
                     ? "Search By Email.."
                     : "Search By Name.."
                 }
@@ -54,7 +78,7 @@ const Header = ({ handleSort, witchSort, setSearchInp, searchInp }) => {
         </View>
         <TouchableOpacity>
           <Button
-            title="Add User"
+            title={HEADER.ADD_USER}
             style={styles.text}
             onPress={() => setShowModal(true)}
           />
@@ -67,7 +91,10 @@ const Header = ({ handleSort, witchSort, setSearchInp, searchInp }) => {
           visible={showModal}
           onRequestClose={() => setShowModal(false)}
         >
-          <UserModal setShowModal={setShowModal} previusScreen="add" />
+          <UserModal
+            setShowModal={setShowModal}
+            previusScreen={PREVIUS_SCREEN.ADD}
+          />
         </Modal>
       </View>
     </View>

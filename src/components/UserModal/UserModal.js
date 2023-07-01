@@ -1,7 +1,5 @@
 import {
   View,
-  Text,
-  TextInput,
   StyleSheet,
   Dimensions,
   Alert,
@@ -9,7 +7,6 @@ import {
   TouchableOpacity,
 } from "react-native";
 import {
-  TextInput_uk,
   Text_uk,
   DropDownList_uk,
 } from "../../ui-kit/regular/index";
@@ -31,8 +28,8 @@ const UserModal = ({ user, setShowModal, previusScreen }) => {
     }
   };
   const genders = [
-    { label: "Mr", value: "Mr" },
-    { label: "Ms", value: "Ms" },
+    { label: "Mr", value: "male" },
+    { label: "Ms", value: "female" },
   ];
   const dispatch = useDispatch();
   const [firstName, setFirstName] = useState(user ? user.firstName : "");
@@ -45,18 +42,18 @@ const UserModal = ({ user, setShowModal, previusScreen }) => {
   const [city, setCity] = useState(user ? user.city : "");
   const [street, setStreet] = useState(user ? user.street : "");
 
-  const userData = {
-    gender,
-    firstName,
-    lastName,
-    email,
-    picture,
-    country,
-    city,
-    street,
-    id: previusScreen === "add" ? uuidv4() : user.id,
-  };
   const handleSave = () => {
+    const userData = {
+      firstName,
+      lastName,
+      email,
+      gender,
+      picture,
+      country,
+      city,
+      street,
+      id: user ? user.id : uuidv4(),
+    };
     if (!firstName || !lastName || !email || !gender || !picture) {
       Alert.alert("OOps", "Field Are Missing", [{ text: "Uderstood" }]);
     } else if (previusScreen === "add") {
@@ -167,7 +164,8 @@ const styles = StyleSheet.create({
   header: {
     alignItems: "center",
     flexDirection: "row",
-    gap: WIDTH - 200,
+    gap: 70,
+    padding: 10,
   },
   exit: {
     alignSelf: "flex-end",

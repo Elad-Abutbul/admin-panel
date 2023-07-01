@@ -21,6 +21,7 @@ export function DropDownList_uk({
       placeholder={textPlaceHolder}
       multiple={false}
       textStyle={styles.text}
+      dropDownContainerStyle={styles.dropDownContainerOpen}
     />
   );
 }
@@ -34,5 +35,8 @@ const styles = StyleSheet.create({
   },
   text: {
     color: "white",
+  },
+  dropDownContainerOpen: {
+    backgroundColor: "#1b2223",
   },
 });

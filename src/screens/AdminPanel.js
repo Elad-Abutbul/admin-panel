@@ -1,52 +1,28 @@
-import { View, FlatList, StyleSheet, Text } from "react-native";
+import { View, FlatList, StyleSheet } from "react-native";
 import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import UserCard from "../components/UserCard";
-import { getUsers } from "../redux/features/userSlice";
-import "react-native-get-random-values";
-import { v4 as uuidv4 } from "uuid";
-import axios from "axios";
-const AdminPanel = ({ witchSort, searchInp }) => {
+import usersData from "../axiosReq/AxiosGetAllUsers";
+import { searchName, searchEmail, sort_a_to_z } from "../filterAndSortUsers";
+import { FILTER_SORT } from "../constants/FilterAndSort";
+const AdminPanel = ({ witchSort, searchInp, if_A_to_Z_on }) => {
   const users = useSelector((state) => state.users.value);
-  const dispatch = useDispatch();
+  const { getAllUsers } = usersData();
   const handleSearch = () => {
     if (searchInp !== "") {
-      if (witchSort === "default" || witchSort === "a-z") {
-        const searchFirstName = users.filter((user) =>
-          user.firstName.toLowerCase().includes(searchInp.toLowerCase())
-        );
-        return searchFirstName;
+      if (witchSort === FILTER_SORT.NAME) {
+        return searchName(searchInp, users);
       } else {
-        const searchEmail = users.filter((user) =>
-          user.email.toLowerCase().includes(searchInp.toLowerCase())
-        );
-        return searchEmail;
+        return searchEmail(searchInp, users);
       }
+    } else if (if_A_to_Z_on) {
+      return sort_a_to_z(users);
     } else {
       return users;
     }
   };
   useEffect(() => {
-    const data = async () => {
-      const res = await axios.get("https://randomuser.me/api/?results=10");
-      const usersDataFilter = res.data.results.map((user) => {
-        return {
-          gender: user.gender,
-          title: user.name.title,
-          firstName: user.name.first,
-          lastName: user.name.last,
-          email: user.email,
-          picture: user.picture.large,
-          country: user.location.country,
-          city: user.location.city,
-          street: user.location.street.name,
-          age: user.registered.age,
-          id: uuidv4(),
-        };
-      });
-      dispatch(getUsers(usersDataFilter));
-    };
-    data();
+    getAllUsers();
   }, []);
 
   return (

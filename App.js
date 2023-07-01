@@ -1,30 +1,35 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Button, View, SafeAreaView } from "react-native";
+import { StyleSheet, SafeAreaView } from "react-native";
 import AdminPanel from "./src/screens/AdminPanel";
 import { store } from "./src/redux/store";
 import { Provider } from "react-redux";
 import Header from "./src/screens/Header";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { FILTER_SORT } from "./src/constants/FilterAndSort";
 
 export default function App() {
-  const [witchSort, setWitchSort] = useState("default");
+  const [witchFilter, setwitchFilter] = useState(FILTER_SORT.NAME);
   const [searchInp, setSearchInp] = useState("");
+  const [if_A_to_Z_on, setIf_A_to_Z_on] = useState(false);
   const handleSort = (sortText) => {
-    setWitchSort(sortText);
+    setwitchFilter(sortText);
   };
-  useEffect(() => {
-  console.log(witchSort)
-})
   return (
     <Provider store={store}>
       <SafeAreaView style={styles.container}>
         <Header
           handleSort={handleSort}
-          witchSort={witchSort}
+          witchFilter={witchFilter}
           setSearchInp={setSearchInp}
           searchInp={searchInp}
+          if_A_to_Z_on={if_A_to_Z_on}
+          setIf_A_to_Z_on={setIf_A_to_Z_on}
         />
-        <AdminPanel witchSort={witchSort} searchInp={searchInp} />
+        <AdminPanel
+          witchFilter={witchFilter}
+          searchInp={searchInp}
+          if_A_to_Z_on={if_A_to_Z_on}
+        />
       </SafeAreaView>
       <StatusBar hidden />
     </Provider>

@@ -1,4 +1,4 @@
-import { View, Text } from "react-native";
+import { View } from "react-native";
 import React from "react";
 import { TextInput_uk, Text_uk } from "../../../ui-kit/regular";
 
