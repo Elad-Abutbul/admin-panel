@@ -10,6 +10,8 @@ import React, { useEffect, useState } from "react";
 import { MaterialIcons } from "@expo/vector-icons";
 import DeleteAlert from "./DeleteAlert";
 import UserModal from "../components/UserModal/UserModal";
+import { GENDERS } from "../constants/Genders";
+import { PREVIUS_SCREEN } from "../constants/Preivus_screens";
 const UserCard = ({ user }) => {
   const [showAlert, setShowAlert] = useState(false);
   const [showModal, setShowModal] = useState(false);
@@ -17,7 +19,7 @@ const UserCard = ({ user }) => {
     setShowModal(true);
   };
   const genderStyling = () => {
-    if (user.gender === "male") {
+    if (user.gender === GENDERS.MALE) {
       return styles.male;
     }
     return styles.female;
@@ -56,7 +58,7 @@ const UserCard = ({ user }) => {
         <UserModal
           user={user}
           setShowModal={setShowModal}
-          previusScreen="edit"
+          previusScreen={PREVIUS_SCREEN.EDIT}
         />
       </Modal>
     </View>

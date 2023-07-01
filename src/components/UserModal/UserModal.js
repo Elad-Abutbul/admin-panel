@@ -6,30 +6,30 @@ import {
   ScrollView,
   TouchableOpacity,
 } from "react-native";
-import {
-  Text_uk,
-  DropDownList_uk,
-} from "../../ui-kit/regular/index";
+import { Text_uk, DropDownList_uk } from "../../ui-kit/regular/index";
 import { Ionicons } from "@expo/vector-icons";
 import "react-native-get-random-values";
 import { v4 as uuidv4 } from "uuid";
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { addUser, editUser } from "../../redux/features/userSlice";
 import ViewContent from "./comps/ViewContent";
 import { CustomBtn_uk } from "../../ui-kit/FormModal/CustomBtn_uk";
+import { GENDERS } from "../../constants/Genders";
+import { PREVIUS_SCREEN } from "../../constants/Preivus_screens";
+import { MODAL } from "../../constants/Modal";
 const WIDTH = Dimensions.get("screen").width;
 const HEIGHT = Dimensions.get("screen").height;
 const UserModal = ({ user, setShowModal, previusScreen }) => {
   const whichGender = () => {
     if (user) {
-      if (user.gender == "male") return "Mr";
-      return "Ms";
+      if (user.gender == GENDERS.MALE) return GENDERS.MR;
+      return GENDERS.MS;
     }
   };
   const genders = [
-    { label: "Mr", value: "male" },
-    { label: "Ms", value: "female" },
+    { label: GENDERS.MR, value: GENDERS.MALE },
+    { label: GENDERS.MS, value: GENDERS.FEMALE },
   ];
   const dispatch = useDispatch();
   const [firstName, setFirstName] = useState(user ? user.firstName : "");
@@ -55,8 +55,8 @@ const UserModal = ({ user, setShowModal, previusScreen }) => {
       id: user ? user.id : uuidv4(),
     };
     if (!firstName || !lastName || !email || !gender || !picture) {
-      Alert.alert("OOps", "Field Are Missing", [{ text: "Uderstood" }]);
-    } else if (previusScreen === "add") {
+      Alert.alert("OOps", "Fields Are Missing", [{ text: "Uderstood" }]);
+    } else if (previusScreen === MODAL.ADD) {
       dispatch(addUser(userData));
     } else {
       dispatch(editUser({ id: user.id, editUserObj: userData }));
@@ -71,8 +71,10 @@ const UserModal = ({ user, setShowModal, previusScreen }) => {
       <View style={styles.modal}>
         <View style={styles.header}>
           <Text_uk
-            textValue={previusScreen === "edit" ? "Edit" : "Add"}
-            textValue2={"User"}
+            textValue={
+              previusScreen === PREVIUS_SCREEN.EDIT ? MODAL.EDIT : MODAL.ADD
+            }
+            textValue2={MODAL.USER}
           />
           <View style={styles.exit}>
             <Ionicons
@@ -91,47 +93,47 @@ const UserModal = ({ user, setShowModal, previusScreen }) => {
               openList={openList}
               stateValue={gender}
               stateFunction={setGender}
-              textPlaceHolder="Select title"
+              textPlaceHolder={MODAL.SELECT_TITLE}
             />
             <ViewContent
               stateFunction={setFirstName}
               stateValue={firstName}
-              textValue={"Enter first name.."}
+              textValue={MODAL.ENTER.FIRST_NAME}
             />
             <ViewContent
               stateFunction={setLastName}
               stateValue={lastName}
-              textValue={"Enter last name.."}
+              textValue={MODAL.ENTER.LAST_NAME}
             />
             <ViewContent
               stateFunction={setEmail}
               stateValue={email}
-              textValue={"Enter email.."}
+              textValue={MODAL.ENTER.EMAIL}
             />
             <ViewContent
               stateFunction={setPicture}
               stateValue={picture}
-              textValue={"Enter picture.."}
+              textValue={MODAL.ENTER.PICTURE}
             />
             <ViewContent
               stateFunction={setCountry}
               stateValue={country}
-              textValue={"Enter country.."}
+              textValue={MODAL.ENTER.COUNTRY}
             />
             <ViewContent
               stateFunction={setCity}
               stateValue={city}
-              textValue={"Enter City"}
+              textValue={MODAL.ENTER.CITY}
             />
             <ViewContent
               stateFunction={setStreet}
               stateValue={street}
-              textValue={"Enter street.."}
+              textValue={MODAL.ENTER.STREET}
             />
           </ScrollView>
         </View>
         <View style={styles.saveBtn}>
-          <CustomBtn_uk handleFunc={handleSave} textValue={"Save"} />
+          <CustomBtn_uk handleFunc={handleSave} textValue={MODAL.SAVE} />
         </View>
       </View>
     </TouchableOpacity>
