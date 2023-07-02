@@ -1,17 +1,11 @@
-import {
-  View,
-  Text,
-  StyleSheet,
-  Image,
-  TouchableOpacity,
-  Modal,
-} from "react-native";
-import React, { useEffect, useState } from "react";
+import { View, Text, Image, TouchableOpacity, Modal } from "react-native";
+import React, { useState } from "react";
 import { MaterialIcons } from "@expo/vector-icons";
 import DeleteAlert from "./DeleteAlert";
 import UserModal from "../components/UserModal/UserModal";
 import { GENDERS } from "../constants/Genders";
 import { PREVIUS_SCREEN } from "../constants/Preivus_screens";
+import { userCartStyles } from "../styles/userCardStyles";
 const UserCard = ({ user }) => {
   const [showAlert, setShowAlert] = useState(false);
   const [showModal, setShowModal] = useState(false);
@@ -20,12 +14,12 @@ const UserCard = ({ user }) => {
   };
   const genderStyling = () => {
     if (user.gender === GENDERS.MALE) {
-      return styles.male;
+      return userCartStyles.male;
     }
-    return styles.female;
+    return userCartStyles.female;
   };
   return (
-    <View style={styles.container}>
+    <View style={userCartStyles.container}>
       <View>
         <TouchableOpacity>
           <MaterialIcons
@@ -37,14 +31,14 @@ const UserCard = ({ user }) => {
         </TouchableOpacity>
       </View>
       <TouchableOpacity style={{ flex: 1 }} onPress={handleModal}>
-        <View style={[styles.content, genderStyling()]}>
+        <View style={[userCartStyles.content, genderStyling()]}>
           {showAlert ? (
             <DeleteAlert setShowAlert={setShowAlert} name={user.firstName} />
           ) : (
             <>
-              <Image style={styles.image} source={{ uri: user.picture }} />
-              <Text style={styles.text}>{user.firstName}</Text>
-              <Text style={styles.text}>{user.lastName}</Text>
+              <Image style={userCartStyles.image} source={{ uri: user.picture }} />
+              <Text style={userCartStyles.text}>{user.firstName}</Text>
+              <Text style={userCartStyles.text}>{user.lastName}</Text>
             </>
           )}
         </View>
@@ -64,36 +58,5 @@ const UserCard = ({ user }) => {
     </View>
   );
 };
-const styles = StyleSheet.create({
-  container: {
-    alignItems: "center",
-    flexDirection: "row",
-    margin: 20,
-    gap: 15,
-  },
-  content: {
-    flexDirection: "row",
-    justifyContent: "space-evenly",
-    alignItems: "center",
-    padding: 10,
-    borderRadius: 30,
-    backgroundColor: "#3a4f50",
-  },
-  image: {
-    width: 60,
-    height: 60,
-    borderRadius: 50,
-  },
-  text: {
-    color: "white",
-  },
-  male: {
-    borderColor: "lightblue",
-    borderWidth: 1,
-  },
-  female: {
-    borderColor: "pink",
-    borderWidth: 1,
-  },
-});
+
 export default UserCard;

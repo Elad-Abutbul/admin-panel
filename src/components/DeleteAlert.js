@@ -1,8 +1,9 @@
-import { View, Text, Button, StyleSheet } from "react-native";
+import { View, Text, Button } from "react-native";
 import React from "react";
 import { useDispatch } from "react-redux";
 import { deleteUser } from "../redux/features/userSlice";
 import { DELETE } from "../constants/DeleteAlert";
+import { deleteAlertStyles } from "../styles/deleteAlertStyles";
 const DeleteAlert = ({ setShowAlert, name }) => {
   const dispatch = useDispatch();
   const handlePress = (text) => {
@@ -12,24 +13,14 @@ const DeleteAlert = ({ setShowAlert, name }) => {
     }
   };
   return (
-    <View style={styles.container}>
+    <View style={deleteAlertStyles.container}>
       <Text>{DELETE.ARE_YOU_SURE}</Text>
-      <View style={styles.content}>
+      <View style={deleteAlertStyles.content}>
         <Button title={DELETE.YES} onPress={() => handlePress(DELETE.DELETE)} />
         <Button title={DELETE.NO} onPress={handlePress} />
       </View>
     </View>
   );
 };
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-  },
-  content: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    gap: 100,
-  },
-});
+
 export default DeleteAlert;
