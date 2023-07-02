@@ -6,7 +6,7 @@ import { Provider } from "react-redux";
 import Header from "./src/screens/Header";
 import { useState } from "react";
 import { FILTER_SORT } from "./src/constants/FilterAndSort";
-
+import { contextApi } from "./src/contextApi";
 export default function App() {
   const [witchFilter, setwitchFilter] = useState(FILTER_SORT.NAME);
   const [searchInp, setSearchInp] = useState("");
@@ -16,22 +16,13 @@ export default function App() {
   };
   return (
     <Provider store={store}>
-      <SafeAreaView style={styles.container}>
-        <Header
-          handleSort={handleSort}
-          witchFilter={witchFilter}
-          setSearchInp={setSearchInp}
-          searchInp={searchInp}
-          if_A_to_Z_on={if_A_to_Z_on}
-          setIf_A_to_Z_on={setIf_A_to_Z_on}
-        />
-        <AdminPanel
-          witchFilter={witchFilter}
-          searchInp={searchInp}
-          if_A_to_Z_on={if_A_to_Z_on}
-        />
-      </SafeAreaView>
-      <StatusBar hidden />
+      <contextApi.Provider value={{handleSort,witchFilter,setSearchInp,searchInp,if_A_to_Z_on,setIf_A_to_Z_on}}>
+        <SafeAreaView style={styles.container}>
+          <Header/>
+          <AdminPanel/>
+        </SafeAreaView>
+        <StatusBar hidden />
+      </contextApi.Provider>
     </Provider>
   );
 }

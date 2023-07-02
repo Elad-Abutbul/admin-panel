@@ -2,70 +2,48 @@ import {
   View,
   StyleSheet,
   Dimensions,
-  Alert,
   ScrollView,
   TouchableOpacity,
 } from "react-native";
 import { Text_uk, DropDownList_uk } from "../../ui-kit/regular/index";
 import { Ionicons } from "@expo/vector-icons";
-import "react-native-get-random-values";
-import { v4 as uuidv4 } from "uuid";
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { addUser, editUser } from "../../redux/features/userSlice";
+import { CustomBtn_uk } from "../../ui-kit/FormModal";
 import ViewContent from "./comps/ViewContent";
-import { CustomBtn_uk } from "../../ui-kit/FormModal/CustomBtn_uk";
 import { GENDERS } from "../../constants/Genders";
 import { PREVIUS_SCREEN } from "../../constants/Preivus_screens";
 import { MODAL } from "../../constants/Modal";
+import useModal from "../../customHooks/UserModal";
 const WIDTH = Dimensions.get("screen").width;
 const HEIGHT = Dimensions.get("screen").height;
 const UserModal = ({ user, setShowModal, previusScreen }) => {
-  const whichGender = () => {
-    if (user) {
-      if (user.gender == GENDERS.MALE) return GENDERS.MR;
-      return GENDERS.MS;
-    }
-  };
+  const {
+    firstName,
+    setFirstName,
+    lastName,
+    setLastName,
+    email,
+    setEmail,
+    picture,
+    setPicture,
+    gender,
+    setGender,
+    country,
+    setCountry,
+    city,
+    setCity,
+    street,
+    setStreet,
+    handleSave,
+    exit,
+  } = useModal(user, setShowModal, previusScreen);
   const genders = [
-    { label: GENDERS.MR, value: GENDERS.MALE },
-    { label: GENDERS.MS, value: GENDERS.FEMALE },
+    { label: GENDERS.MALE, value: GENDERS.MALE },
+    { label: GENDERS.FEMALE, value: GENDERS.FEMALE },
   ];
-  const dispatch = useDispatch();
-  const [firstName, setFirstName] = useState(user ? user.firstName : "");
-  const [lastName, setLastName] = useState(user ? user.lastName : "");
-  const [email, setEmail] = useState(user ? user.email : "");
-  const [openList, setOpenList] = useState(false);
-  const [gender, setGender] = useState(user ? whichGender() : "");
-  const [picture, setPicture] = useState(user ? user.picture : "");
-  const [country, setCountry] = useState(user ? user.country : "");
-  const [city, setCity] = useState(user ? user.city : "");
-  const [street, setStreet] = useState(user ? user.street : "");
 
-  const handleSave = () => {
-    const userData = {
-      firstName,
-      lastName,
-      email,
-      gender,
-      picture,
-      country,
-      city,
-      street,
-      id: user ? user.id : uuidv4(),
-    };
-    if (!firstName || !lastName || !email || !gender || !picture) {
-      Alert.alert("OOps", "Fields Are Missing", [{ text: "Uderstood" }]);
-    } else if (previusScreen === MODAL.ADD) {
-      dispatch(addUser(userData));
-    } else {
-      dispatch(editUser({ id: user.id, editUserObj: userData }));
-    }
-    return exit();
-  };
-  const exit = () => {
-    setShowModal(false);
-  };
+  const [openList, setOpenList] = useState(false);
+
   return (
     <TouchableOpacity disabled={true} style={styles.container}>
       <View style={styles.modal}>

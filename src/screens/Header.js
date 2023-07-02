@@ -1,5 +1,5 @@
 import { View, Text, Button, StyleSheet } from "react-native";
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { TextInput } from "react-native";
 import { Modal } from "react-native";
 import UserModal from "../components/UserModal/UserModal";
@@ -10,14 +10,9 @@ import { CheckBox_uk } from "../ui-kit/header/CheckBox_uk";
 import { FILTER_SORT } from "../constants/FilterAndSort";
 import { HEADER } from "../constants/Header";
 import { PREVIUS_SCREEN } from "../constants/Preivus_screens";
-const Header = ({
-  handleSort,
-  witchFilter,
-  setSearchInp,
-  searchInp,
-  setIf_A_to_Z_on,
-  if_A_to_Z_on,
-}) => {
+import { contextApi } from "../contextApi";
+const Header = () => {
+  const valContext = useContext(contextApi);
   const [showModal, setShowModal] = useState(false);
   const [showSort, setShowSort] = useState(false);
 
@@ -35,24 +30,24 @@ const Header = ({
               <View style={styles.checkBoxContainer}>
                 <View style={styles.itemCheckBox}>
                   <CheckBox_uk
-                    witchFilter={if_A_to_Z_on}
-                    handleSort={setIf_A_to_Z_on}
-                    value={!if_A_to_Z_on}
+                    witchFilter={valContext.if_A_to_Z_on}
+                    handleSort={valContext.setIf_A_to_Z_on}
+                    value={!valContext.if_A_to_Z_on}
                   />
                   <Text_uk textValue={FILTER_SORT.A_TO_Z} />
                 </View>
                 <View style={styles.itemCheckBox}>
                   <CheckBox_uk
-                    witchFilter={witchFilter}
-                    handleSort={handleSort}
+                    witchFilter={valContext.witchFilter}
+                    handleSort={valContext.handleSort}
                     value={FILTER_SORT.EMAIL}
                   />
                   <Text_uk textValue={FILTER_SORT.EMAIL} />
                 </View>
                 <View style={styles.itemCheckBox}>
                   <CheckBox_uk
-                    witchFilter={witchFilter}
-                    handleSort={handleSort}
+                    witchFilter={valContext.witchFilter}
+                    handleSort={valContext.handleSort}
                     value={FILTER_SORT.NAME}
                   />
                   <Text_uk textValue={FILTER_SORT.NAME} />
@@ -61,14 +56,16 @@ const Header = ({
             ) : (
               <TextInput
                 placeholder={
-                  witchFilter === "email"
+                  valContext.witchFilter === FILTER_SORT.EMAIL
                     ? "Search By Email.."
                     : "Search By Name.."
                 }
                 placeholderTextColor="white"
                 style={styles.inp}
-                value={searchInp}
-                onChange={(event) => setSearchInp(event.nativeEvent.text)}
+                value={valContext.searchInp}
+                onChange={(event) =>
+                  valContext.setSearchInp(event.nativeEvent.text)
+                }
               />
             )}
             <TouchableOpacity onPress={() => setShowSort(!showSort)}>
@@ -132,6 +129,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#3a4f50",
     padding: 10,
     borderRadius: 50,
+    color: "white",
   },
   checkBoxContainer: {
     flexDirection: "row",
