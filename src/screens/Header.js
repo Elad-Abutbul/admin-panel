@@ -1,5 +1,5 @@
 import { View, Text, Button } from "react-native";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { TextInput } from "react-native";
 import { Modal } from "react-native";
 import UserModal from "../components/UserModal/UserModal";
@@ -37,7 +37,7 @@ const Header = () => {
                   />
                   <Text_uk textValue={FILTER_SORT.A_TO_Z} />
                 </View>
-                <View style={styles.itemCheckBox}>
+                <View style={headerStyles.itemCheckBox}>
                   <CheckBox_uk
                     witchFilter={valContext.witchFilter}
                     handleSort={valContext.handleSort}
