@@ -1,21 +1,27 @@
-import { View, Text, Button, StyleSheet, Dimensions } from "react-native";
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { View, Text, Button, StyleSheet } from "react-native";
+import React, { useContext, useEffect, useState } from "react";
 import { TextInput } from "react-native";
 import { Modal } from "react-native";
-import UserModal from "../components/UserModal";
-import CheckBox from "react-native-check-box";
+import UserModal from "../components/UserModal/UserModal";
 import { FontAwesome } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native";
-import { usersFilterAtoZ } from "../redux/features/userSlice";
-const Header = ({ handleSort, witchSort }) => {
-  const dispatch = useDispatch();
+import { Text_uk } from "../ui-kit/regular";
+import { CheckBox_uk } from "../ui-kit/header/CheckBox_uk";
+import { FILTER_SORT } from "../constants/FilterAndSort";
+import { HEADER } from "../constants/Header";
+import { PREVIUS_SCREEN } from "../constants/Preivus_screens";
+import { contextApi } from "../contextApi";
+const Header = () => {
+  const valContext = useContext(contextApi);
   const [showModal, setShowModal] = useState(false);
   const [showSort, setShowSort] = useState(false);
+
   return (
     <View style={styles.container}>
       <View style={styles.titleContainer}>
-        <Text style={[styles.titleText, styles.text]}>Admin Panel😎</Text>
+        <Text style={[styles.titleText, styles.text]}>
+          {HEADER.ADMIN_PANEL}
+        </Text>
       </View>
       <View style={styles.elementContainer}>
         <View>
@@ -23,41 +29,43 @@ const Header = ({ handleSort, witchSort }) => {
             {showSort ? (
               <View style={styles.checkBoxContainer}>
                 <View style={styles.itemCheckBox}>
-                  <CheckBox
-                    isChecked={witchSort === "a-z"}
-                    onClick={() => {
-                      handleSort("a-z");
-                      dispatch(usersFilterAtoZ());
-                    }}
-                    checkBoxColor="white"
-                    checkedCheckBoxColor="green"
+                  <CheckBox_uk
+                    witchFilter={valContext.if_A_to_Z_on}
+                    handleSort={valContext.setIf_A_to_Z_on}
+                    value={!valContext.if_A_to_Z_on}
                   />
-                  <Text style={styles.text}>A-Z</Text>
+                  <Text_uk textValue={FILTER_SORT.A_TO_Z} />
                 </View>
                 <View style={styles.itemCheckBox}>
-                  <CheckBox
-                    isChecked={witchSort === "name"}
-                    onClick={() => handleSort("name")}
-                    checkBoxColor="white"
-                    checkedCheckBoxColor="green"
+                  <CheckBox_uk
+                    witchFilter={valContext.witchFilter}
+                    handleSort={valContext.handleSort}
+                    value={FILTER_SORT.EMAIL}
                   />
-                  <Text style={styles.text}>Name</Text>
+                  <Text_uk textValue={FILTER_SORT.EMAIL} />
                 </View>
                 <View style={styles.itemCheckBox}>
-                  <CheckBox
-                    isChecked={witchSort === "email"}
-                    onClick={() => handleSort("email")}
-                    checkBoxColor="white"
-                    checkedCheckBoxColor="green"
+                  <CheckBox_uk
+                    witchFilter={valContext.witchFilter}
+                    handleSort={valContext.handleSort}
+                    value={FILTER_SORT.NAME}
                   />
-                  <Text style={styles.text}>Email</Text>
+                  <Text_uk textValue={FILTER_SORT.NAME} />
                 </View>
               </View>
             ) : (
               <TextInput
-                placeholder="Search By Name.."
+                placeholder={
+                  valContext.witchFilter === FILTER_SORT.EMAIL
+                    ? "Search By Email.."
+                    : "Search By Name.."
+                }
                 placeholderTextColor="white"
                 style={styles.inp}
+                value={valContext.searchInp}
+                onChange={(event) =>
+                  valContext.setSearchInp(event.nativeEvent.text)
+                }
               />
             )}
             <TouchableOpacity onPress={() => setShowSort(!showSort)}>
@@ -65,8 +73,12 @@ const Header = ({ handleSort, witchSort }) => {
             </TouchableOpacity>
           </View>
         </View>
-        <TouchableOpacity onPress={() => setShowModal(true)}>
-          <Button title="Add User" style={styles.text} />
+        <TouchableOpacity>
+          <Button
+            title={HEADER.ADD_USER}
+            style={styles.text}
+            onPress={() => setShowModal(true)}
+          />
         </TouchableOpacity>
       </View>
       <View>
@@ -76,7 +88,10 @@ const Header = ({ handleSort, witchSort }) => {
           visible={showModal}
           onRequestClose={() => setShowModal(false)}
         >
-          <UserModal setShowModal={setShowModal} previusScreen="add" />
+          <UserModal
+            setShowModal={setShowModal}
+            previusScreen={PREVIUS_SCREEN.ADD}
+          />
         </Modal>
       </View>
     </View>
@@ -114,6 +129,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#3a4f50",
     padding: 10,
     borderRadius: 50,
+    color: "white",
   },
   checkBoxContainer: {
     flexDirection: "row",

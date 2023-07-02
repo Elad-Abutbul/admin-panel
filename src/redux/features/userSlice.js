@@ -20,17 +20,20 @@ export const counterSlice = createSlice({
       state.value.unshift(action.payload);
     },
     editUser: (state, action) => {
-      const { id, editUserObj } = action.payload;
-      const userIndex = state.value.findIndex((user) => user.id === id);
+      const { editUserObj } = action.payload;
+      const userIndex = state.value.findIndex(
+        (user) => user.id === editUserObj.id
+      );
       if (userIndex !== -1) {
         state.value[userIndex] = editUserObj;
       }
     },
     usersFilterAtoZ: (state) => {
-      state.value = state.value.sort((a, b) =>
+      const filterarr = state.value.sort((a, b) =>
         a.firstName.localeCompare(b.firstName)
       );
-      },
+      return filterarr;
+    },
   },
 });
 

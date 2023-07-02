@@ -1,29 +1,28 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Button, View, SafeAreaView } from "react-native";
+import { StyleSheet, SafeAreaView } from "react-native";
 import AdminPanel from "./src/screens/AdminPanel";
 import { store } from "./src/redux/store";
-import { Provider, useSelector } from "react-redux";
+import { Provider } from "react-redux";
 import Header from "./src/screens/Header";
-import { useEffect, useState } from "react";
-import { getJsonUserData, getUserData } from "./src/UsersData";
-import { useDispatch } from "react-redux";
-import axios from "axios";
-import { getUsers } from "./src/redux/features/userSlice";
-
+import { useState } from "react";
+import { FILTER_SORT } from "./src/constants/FilterAndSort";
+import { contextApi } from "./src/contextApi";
 export default function App() {
-  const url = "https://randomuser.me/api/?results=10";
-  const [witchSort, setWitchSort] = useState("All");
+  const [witchFilter, setwitchFilter] = useState(FILTER_SORT.NAME);
+  const [searchInp, setSearchInp] = useState("");
+  const [if_A_to_Z_on, setIf_A_to_Z_on] = useState(false);
   const handleSort = (sortText) => {
-    setWitchSort(sortText);
-    console.log(witchSort);
+    setwitchFilter(sortText);
   };
   return (
     <Provider store={store}>
-      <SafeAreaView style={styles.container}>
-        <Header handleSort={handleSort} witchSort={witchSort} />
-        <AdminPanel witchSort={witchSort} />
-      </SafeAreaView>
-      <StatusBar hidden />
+      <contextApi.Provider value={{handleSort,witchFilter,setSearchInp,searchInp,if_A_to_Z_on,setIf_A_to_Z_on}}>
+        <SafeAreaView style={styles.container}>
+          <Header/>
+          <AdminPanel/>
+        </SafeAreaView>
+        <StatusBar hidden />
+      </contextApi.Provider>
     </Provider>
   );
 }
