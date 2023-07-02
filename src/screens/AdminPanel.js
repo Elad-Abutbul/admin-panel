@@ -3,11 +3,8 @@ import React, { useContext, useEffect } from "react";
 import { useSelector } from "react-redux";
 import UserCard from "../components/UserCard";
 import usersData from "../axiosReq/AxiosGetAllUsers";
-import { searchName, searchEmail, sort_a_to_z } from "../adminPanelFunction/filterAndSortUsers";
-import { contextApi } from "../contextApi";
 import { adminPanelStyles } from "../styles/adminPanelStyles";
 const AdminPanel = () => {
-  const users = useSelector((state) => state.users.value);
   const { getAllUsers } = usersData();
 
   useEffect(() => {
