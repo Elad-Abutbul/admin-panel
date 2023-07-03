@@ -1,8 +1,8 @@
 import { View } from "react-native";
 import React from "react";
-import { TextInput_uk, Text_uk } from "../../../ui-kit/regular";
+import { TextInput_uk, Text_uk } from "../../ui-kit/regular";
 
-const ViewContent = ({ stateFunction, stateValue, textValue }) => {
+const  ModalItem= ({ stateFunction, stateValue, textValue }) => {
   return (
     <View>
       <Text_uk textValue={textValue} />
@@ -11,4 +11,4 @@ const ViewContent = ({ stateFunction, stateValue, textValue }) => {
   );
 };
 
-export default ViewContent;
+export default ModalItem;

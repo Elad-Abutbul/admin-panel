@@ -13,4 +13,6 @@ export const MODAL = {
   ADD: "Add",
   EDIT: "Edit",
   USER: "User",
+  EDIT_USER: "Edit User",
+  ADD_USER: "Add User",
 };

@@ -1,4 +1,4 @@
-import { View, Text, Button, StyleSheet } from "react-native";
+import { View, Text, Button } from "react-native";
 import React, { useContext, useEffect, useState } from "react";
 import { TextInput } from "react-native";
 import { Modal } from "react-native";
@@ -11,24 +11,25 @@ import { FILTER_SORT } from "../constants/FilterAndSort";
 import { HEADER } from "../constants/Header";
 import { PREVIUS_SCREEN } from "../constants/Preivus_screens";
 import { contextApi } from "../contextApi";
+import { headerStyles } from "../styles/headerStyles";
 const Header = () => {
   const valContext = useContext(contextApi);
   const [showModal, setShowModal] = useState(false);
   const [showSort, setShowSort] = useState(false);
 
   return (
-    <View style={styles.container}>
-      <View style={styles.titleContainer}>
-        <Text style={[styles.titleText, styles.text]}>
+    <View style={headerStyles.container}>
+      <View style={headerStyles.titleContainer}>
+        <Text style={[headerStyles.titleText, headerStyles.text]}>
           {HEADER.ADMIN_PANEL}
         </Text>
       </View>
-      <View style={styles.elementContainer}>
+      <View style={headerStyles.elementContainer}>
         <View>
-          <View style={styles.searchContainer}>
+          <View style={headerStyles.searchContainer}>
             {showSort ? (
-              <View style={styles.checkBoxContainer}>
-                <View style={styles.itemCheckBox}>
+              <View style={headerStyles.checkBoxContainer}>
+                <View style={headerStyles.itemCheckBox}>
                   <CheckBox_uk
                     witchFilter={valContext.if_A_to_Z_on}
                     handleSort={valContext.setIf_A_to_Z_on}
@@ -36,7 +37,7 @@ const Header = () => {
                   />
                   <Text_uk textValue={FILTER_SORT.A_TO_Z} />
                 </View>
-                <View style={styles.itemCheckBox}>
+                <View style={headerStyles.itemCheckBox}>
                   <CheckBox_uk
                     witchFilter={valContext.witchFilter}
                     handleSort={valContext.handleSort}
@@ -44,7 +45,7 @@ const Header = () => {
                   />
                   <Text_uk textValue={FILTER_SORT.EMAIL} />
                 </View>
-                <View style={styles.itemCheckBox}>
+                <View style={headerStyles.itemCheckBox}>
                   <CheckBox_uk
                     witchFilter={valContext.witchFilter}
                     handleSort={valContext.handleSort}
@@ -57,11 +58,11 @@ const Header = () => {
               <TextInput
                 placeholder={
                   valContext.witchFilter === FILTER_SORT.EMAIL
-                    ? "Search By Email.."
-                    : "Search By Name.."
+                    ? HEADER.SEARCH_BY_EMAIL
+                    : HEADER.SEARCH_BY_NAME
                 }
                 placeholderTextColor="white"
-                style={styles.inp}
+                style={headerStyles.inp}
                 value={valContext.searchInp}
                 onChange={(event) =>
                   valContext.setSearchInp(event.nativeEvent.text)
@@ -76,7 +77,7 @@ const Header = () => {
         <TouchableOpacity>
           <Button
             title={HEADER.ADD_USER}
-            style={styles.text}
+            style={headerStyles.text}
             onPress={() => setShowModal(true)}
           />
         </TouchableOpacity>
@@ -97,53 +98,5 @@ const Header = () => {
     </View>
   );
 };
-const styles = StyleSheet.create({
-  container: {
-    padding: 5,
-    justifyContent: "center",
-    flex: 1.5,
-    backgroundColor: "#1b2223",
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 3 },
-    shadowOpacity: 0.3,
-    shadowRadius: 5,
-  },
-  titleContainer: {
-    alignItems: "center",
-  },
-  titleText: {
-    fontSize: 20,
-    color: "white",
-    marginTop: 10,
-  },
-  text: {
-    color: "white",
-  },
-  elementContainer: {
-    flex: 1,
-    justifyContent: "space-around",
-    alignItems: "center",
-    flexDirection: "row",
-  },
-  inp: {
-    backgroundColor: "#3a4f50",
-    padding: 10,
-    borderRadius: 50,
-    color: "white",
-  },
-  checkBoxContainer: {
-    flexDirection: "row",
-    gap: 10,
-  },
-  searchContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 15,
-  },
-
-  itemCheckBox: {
-    alignItems: "center",
-  },
-});
 
 export default Header;

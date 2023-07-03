@@ -1,14 +1,15 @@
 import "react-native-get-random-values";
 import { v4 as uuidv4 } from "uuid";
-import axios from "axios";
 import { getUsers } from "../redux/features/userSlice";
 import { Alert } from "react-native";
 import { useDispatch } from "react-redux";
+import { UsersService } from "../services/userService";
+import { USERS } from "../constants/Users";
 export default usersData = () => {
   const dispatch = useDispatch();
-  const getAllUsers= async () => {
+  const getAllUsers = async () => {
     try {
-      const res = await axios.get("https://randomuser.me/api/?results=10");
+      const res = await UsersService.getUsers(USERS.NUMBER_OF_USERS);
       const usersDataFilter = res.data.results.map((user) => {
         return {
           fullName: `${user.name.first}  ${user.name.last}`,

@@ -1,10 +1,6 @@
 import { Text, StyleSheet } from "react-native";
-export function Text_uk({ textValue, textValue2 }) {
-  return (
-    <Text style={styles.text}>
-      {textValue} {textValue2}
-    </Text>
-  );
+export function Text_uk({ textValue }) {
+  return <Text style={styles.text}>{textValue}</Text>;
 }
 const styles = StyleSheet.create({
   text: {

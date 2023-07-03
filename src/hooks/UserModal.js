@@ -28,15 +28,15 @@ const useModal = (user, setShowModal, previusScreen) => {
       street,
       id: user ? user.id : uuidv4(),
     };
-    console.log(previusScreen);
     if (!firstName || !lastName || !email || !gender || !picture) {
       Alert.alert("OOps", "Fields Are Missing", [{ text: "Understood" }]);
     } else if (previusScreen === PREVIUS_SCREEN.ADD) {
       dispatch(addUser(userData));
+      return exit();
     } else {
       dispatch(editUser({ editUserObj: userData }));
+      return exit();
     }
-    return exit();
   };
 
   const exit = () => {
