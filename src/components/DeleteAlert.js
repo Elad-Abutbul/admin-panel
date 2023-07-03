@@ -14,7 +14,7 @@ const DeleteAlert = ({ setShowAlert, name }) => {
   };
   return (
     <View style={deleteAlertStyles.container}>
-      <Text>{DELETE.ARE_YOU_SURE}</Text>
+      <Text  style={deleteAlertStyles.text}>{DELETE.ARE_YOU_SURE}</Text>
       <View style={deleteAlertStyles.content}>
         <Button title={DELETE.YES} onPress={() => handlePress(DELETE.DELETE)} />
         <Button title={DELETE.NO} onPress={handlePress} />

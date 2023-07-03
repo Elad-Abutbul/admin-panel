@@ -1,7 +1,6 @@
 import React from "react";
-import { StyleSheet } from "react-native";
 import DropDownList from "react-native-dropdown-picker";
-
+import {dropDownStyles} from '../../styles/dropDownList'
 export function DropDownList_uk({
   openList,
   setOpenList,
@@ -11,8 +10,9 @@ export function DropDownList_uk({
   textPlaceHolder,
 }) {
   return (
+
     <DropDownList
-      style={styles.input}
+      style={dropDownStyles.input}
       setOpen={() => setOpenList(!openList)}
       open={openList}
       items={data}
@@ -20,23 +20,9 @@ export function DropDownList_uk({
       setValue={(val) => stateFunction(val)}
       placeholder={textPlaceHolder}
       multiple={false}
-      textStyle={styles.text}
-      dropDownContainerStyle={styles.dropDownContainerOpen}
+      textStyle={dropDownStyles.text}
+      dropDownContainerStyle={dropDownStyles.dropDownContainerOpen}
     />
   );
 }
 
-const styles = StyleSheet.create({
-  input: {
-    padding: 10,
-    borderRadius: 10,
-    backgroundColor: "#1b2223",
-    marginVertical: 20,
-  },
-  text: {
-    color: "white",
-  },
-  dropDownContainerOpen: {
-    backgroundColor: "#1b2223",
-  },
-});

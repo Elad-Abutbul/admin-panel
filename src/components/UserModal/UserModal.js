@@ -1,19 +1,13 @@
-import {
-  View,
-  StyleSheet,
-  Dimensions,
-  ScrollView,
-  TouchableOpacity,
-} from "react-native";
+import { View, ScrollView, TouchableOpacity } from "react-native";
 import { Text_uk, DropDownList_uk } from "../../ui-kit/regular/index";
 import { Ionicons } from "@expo/vector-icons";
 import React, { useState } from "react";
 import { CustomBtn_uk } from "../../ui-kit/FormModal";
-import ViewContent from "./comps/ViewContent";
+import ModalItem from "./ModalItem";
 import { GENDERS } from "../../constants/Genders";
 import { PREVIUS_SCREEN } from "../../constants/Preivus_screens";
 import { MODAL } from "../../constants/Modal";
-import useModal from "../../customHooks/UserModal";
+import useModal from "../../hooks/UserModal";
 import { userModalStyles } from "../../styles/userModalStyles";
 
 const UserModal = ({ user, setShowModal, previusScreen }) => {
@@ -38,8 +32,8 @@ const UserModal = ({ user, setShowModal, previusScreen }) => {
     exit,
   } = useModal(user, setShowModal, previusScreen);
   const genders = [
-    { label: GENDERS.MALE, value: GENDERS.MALE },
-    { label: GENDERS.FEMALE, value: GENDERS.FEMALE },
+    { label: GENDERS.MR, value: GENDERS.MALE },
+    { label: GENDERS.MS, value: GENDERS.FEMALE },
   ];
 
   const [openList, setOpenList] = useState(false);
@@ -50,9 +44,10 @@ const UserModal = ({ user, setShowModal, previusScreen }) => {
         <View style={userModalStyles.header}>
           <Text_uk
             textValue={
-              previusScreen === PREVIUS_SCREEN.EDIT ? MODAL.EDIT : MODAL.ADD
+              previusScreen === PREVIUS_SCREEN.EDIT
+                ? MODAL.EDIT_USER
+                : MODAL.ADD_USER
             }
-            textValue2={MODAL.USER}
           />
           <View style={userModalStyles.exit}>
             <Ionicons
@@ -73,37 +68,37 @@ const UserModal = ({ user, setShowModal, previusScreen }) => {
               stateFunction={setGender}
               textPlaceHolder={MODAL.SELECT_TITLE}
             />
-            <ViewContent
+            <ModalItem
               stateFunction={setFirstName}
               stateValue={firstName}
               textValue={MODAL.ENTER.FIRST_NAME}
             />
-            <ViewContent
+            <ModalItem
               stateFunction={setLastName}
               stateValue={lastName}
               textValue={MODAL.ENTER.LAST_NAME}
             />
-            <ViewContent
+            <ModalItem
               stateFunction={setEmail}
               stateValue={email}
               textValue={MODAL.ENTER.EMAIL}
             />
-            <ViewContent
+            <ModalItem
               stateFunction={setPicture}
               stateValue={picture}
               textValue={MODAL.ENTER.PICTURE}
             />
-            <ViewContent
+            <ModalItem
               stateFunction={setCountry}
               stateValue={country}
               textValue={MODAL.ENTER.COUNTRY}
             />
-            <ViewContent
+            <ModalItem
               stateFunction={setCity}
               stateValue={city}
               textValue={MODAL.ENTER.CITY}
             />
-            <ViewContent
+            <ModalItem
               stateFunction={setStreet}
               stateValue={street}
               textValue={MODAL.ENTER.STREET}

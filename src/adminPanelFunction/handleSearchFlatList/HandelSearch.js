@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import {
   searchName,
   searchEmail,
-  sort_a_to_z,
+  AlphabeticSort,
 } from "../../adminPanelFunction/filterAndSortUsers";
 export const handleSearch = () => {
   const valContext = useContext(contextApi);
@@ -17,7 +17,7 @@ export const handleSearch = () => {
       return searchEmail(valContext.searchInp, users);
     }
   } else if (valContext.if_A_to_Z_on) {
-    return sort_a_to_z(users);
+    return AlphabeticSort(users);
   } else {
     return users;
   }

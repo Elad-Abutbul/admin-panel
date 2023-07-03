@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  value: null,
+  value: [],
 };
 
 export const counterSlice = createSlice({
@@ -13,7 +13,7 @@ export const counterSlice = createSlice({
     },
     deleteUser: (state, action) => {
       state.value = state.value.filter(
-        (user) => user.name.first !== action.payload
+        (user) => user.firstName !== action.payload
       );
     },
     addUser: (state, action) => {
@@ -37,7 +37,6 @@ export const counterSlice = createSlice({
   },
 });
 
-// Action creators are generated for each case reducer function
 export const { deleteUser, addUser, editUser, getUsers, usersFilterAtoZ } =
   counterSlice.actions;
 

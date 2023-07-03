@@ -10,4 +10,7 @@ export const deleteAlertStyles = StyleSheet.create({
     justifyContent: "space-between",
     gap: 100,
   },
+  text: {
+    color:"white"
+  }
 });

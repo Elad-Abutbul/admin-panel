@@ -37,7 +37,7 @@ const Header = () => {
                   />
                   <Text_uk textValue={FILTER_SORT.A_TO_Z} />
                 </View>
-                <View style={styles.itemCheckBox}>
+                <View style={headerStyles.itemCheckBox}>
                   <CheckBox_uk
                     witchFilter={valContext.witchFilter}
                     handleSort={valContext.handleSort}
